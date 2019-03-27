@@ -1,5 +1,9 @@
 package ie.gmit.sw;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Gesture;
@@ -9,6 +13,7 @@ import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.SwipeGesture;
 import com.leapmotion.leap.Vector;
+import com.rmi.RMI_Client;
 
 public class LeapListener extends Listener {
     public void onInit(Controller controller) {
@@ -33,17 +38,17 @@ public class LeapListener extends Listener {
     }
 
     public void onFrame(Controller controller) {
-//    	RMI_Client client = null;
-//    	
-//    	try {
-//			client = new RMI_Client();
-//		} catch (MalformedURLException e) {
-//			e.printStackTrace();
-//		} catch (RemoteException e) {
-//			e.printStackTrace();
-//		} catch (NotBoundException e) {
-//			e.printStackTrace();
-//		}
+    	RMI_Client client = null;
+    	
+    	try {
+			client = new RMI_Client();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			e.printStackTrace();
+		}
     	
         // Get the most recent frame and report some basic information
         Frame frame = controller.frame();
@@ -60,7 +65,18 @@ public class LeapListener extends Listener {
         	if(hand.isRight()) {
             	if(hand.grabStrength() > 0.99) {
             		System.out.println("Grab detected!");
-
+            		try {
+						client.rmiSendCommand(11);
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+            	} else {
+            		System.out.println("Open hand!");
+            		try {
+						client.rmiSendCommand(4);
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
             	}
         	}
         }

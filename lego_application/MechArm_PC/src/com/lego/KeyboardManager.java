@@ -1,4 +1,4 @@
-package com.command;
+package com.lego;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -9,15 +9,14 @@ import java.rmi.RemoteException;
 
 import javax.swing.*;
 
-import com.rmi.RMI_Client;
 
-public class KeyEventManager extends JFrame implements KeyListener, ActionListener{
+public class KeyboardManager extends JFrame implements KeyListener, ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	JTextArea displayArea; // output messages
 	JTextField typingArea; // needed for keyListener
 	static final String newline = System.getProperty("line.separator");
-	RMI_Client rmi;
+	private ConnectionManager cm;
 
 	public static void main(String[] args) {
 
@@ -60,7 +59,7 @@ public class KeyEventManager extends JFrame implements KeyListener, ActionListen
 
 	private static void createAndShowGUI() throws MalformedURLException, RemoteException, NotBoundException {
 		// Create and set up the window.
-		KeyEventManager frame = new KeyEventManager("KeyEventDemo");
+		KeyboardManager frame = new KeyboardManager("test");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Set up the content pane.
@@ -91,10 +90,9 @@ public class KeyEventManager extends JFrame implements KeyListener, ActionListen
 		displayArea.setText("hit c to close session" + newline);
 	}
 
-	public KeyEventManager(String name) throws MalformedURLException, RemoteException, NotBoundException {
+	public KeyboardManager(String name) throws MalformedURLException, RemoteException, NotBoundException {
 		super(name);
-		rmi = new RMI_Client();
-
+		cm = new ConnectionManager();
 	}
 
 	/** Handle the key typed event from the text field. */
@@ -107,8 +105,8 @@ public class KeyEventManager extends JFrame implements KeyListener, ActionListen
 		if (e.getKeyChar() == 'q') {
 			displayInfo(e, "closing connection");
 			try {
-				rmi.rmiSendCommand(6);
-			} catch (RemoteException e1) {
+				cm.sendCommand(6);
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -122,16 +120,16 @@ public class KeyEventManager extends JFrame implements KeyListener, ActionListen
 			displayInfo(e, "back");
 			//sender.sendCommand(3);
 			try {
-				rmi.rmiSendCommand(3);
-			} catch (RemoteException e1) {
+				cm.sendCommand(3);
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
 			displayInfo(e, "forward");
 			try {
-				rmi.rmiSendCommand(2);
-			} catch (RemoteException e1) {
+				cm.sendCommand(2);
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -139,8 +137,8 @@ public class KeyEventManager extends JFrame implements KeyListener, ActionListen
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			displayInfo(e, "left");
 			try {
-				rmi.rmiSendCommand(5);
-			} catch (RemoteException e1) {
+				cm.sendCommand(5);
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -148,42 +146,32 @@ public class KeyEventManager extends JFrame implements KeyListener, ActionListen
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			displayInfo(e, "right");
 			try {
-				rmi.rmiSendCommand(1);
-			} catch (RemoteException e1) {
+				cm.sendCommand(1);
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+				
 			}
 			//sender.sendCommand(1);
 		} else if (e.getKeyCode() == KeyEvent.VK_O) {
-			//displayInfo(e, "Open");
+			displayInfo(e, "Open");
 			try {
-				rmi.rmiSendCommand(4);
-			} catch (RemoteException e1) {
+				cm.sendCommand(4);
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			//sender.sendCommand(4);
 		} else if (e.getKeyCode() == KeyEvent.VK_C) {
-			//displayInfo(e, "Close");
+			displayInfo(e, "Close");
 			try {
-				rmi.rmiSendCommand(11);
-			} catch (RemoteException e1) {
+				cm.sendCommand(11);
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			//sender.sendCommand(11);
 		}
-	}
-
-	/** Handle the key released event from the text field. */
-	public void keyReleased(KeyEvent e) {
-		try {
-			rmi.rmiSendCommand(10);
-		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		//sender.sendCommand(10);
 	}
 
 	/** Handle the button click. */
@@ -211,5 +199,13 @@ public class KeyEventManager extends JFrame implements KeyListener, ActionListen
 
 		displayArea.append(keyStatus + keyString + newline);
 		displayArea.setCaretPosition(displayArea.getDocument().getLength());
+	}
+
+
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

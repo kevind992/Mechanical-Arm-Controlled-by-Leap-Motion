@@ -1,3 +1,10 @@
+#Leap SDK
+LeapSDK/
+
+#Lejos extensions
+.nxd
+.nxj
+
 # Compiled class file
 *.class
 

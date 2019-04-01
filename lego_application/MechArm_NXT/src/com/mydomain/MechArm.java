@@ -43,49 +43,58 @@ public class MechArm {
 			case 1:
 				LCD.clear();
 				LCD.drawString("turn left", 0, 0);
+				LCD.refresh();
 				Motor.C.forward();
-				Delay.msDelay(1000);
+				Delay.msDelay(200);
+				Motor.C.stop();
+				
 				break;
 			case 2:
 				LCD.clear();
 				LCD.drawString("straight", 0, 0);
 				Motor.B.forward();
-				Delay.msDelay(1000);
+				Delay.msDelay(200);
+				Motor.B.stop();
 				break;
 			case 3:
 				LCD.clear();
 				LCD.drawString("reverse", 0, 0);
 				Motor.B.backward();
-				Delay.msDelay(1000);
+				Delay.msDelay(200);
+				Motor.B.stop();
 				break;
 			case 4:
 				LCD.clear();
 				LCD.drawString("Opening Claw", 0, 0);
 				Motor.A.forward();
-				Delay.msDelay(1000);
+				Delay.msDelay(100);
+				Motor.A.stop();
 				break;
 			case 5:
 				LCD.clear();
 				LCD.drawString("turn right", 0, 0);
 				Motor.C.backward();
-				Delay.msDelay(1000);
+				Delay.msDelay(200);
+				Motor.C.stop();
 				break;
 			case 6:
 				
 				LCD.clear();
 				LCD.drawString("Closing Connection", 0, 0);
-				Delay.msDelay(1000);
+				Delay.msDelay(200);
+				Motor.C.stop();
 				break;
 			case 10:
-				Motor.A.stop();
-				Motor.B.stop();
-				Motor.C.stop();
+				//Motor.A.stop();
+				//Motor.B.stop();
+				//Motor.C.stop();
 				break;
 			case 11:
 				LCD.clear();
 				LCD.drawString("Closing Claw", 0, 0);
 				Motor.A.backward();
-				Delay.msDelay(1000);
+				Delay.msDelay(100);
+				Motor.A.stop();
 				break;
 			}
 			

@@ -39,6 +39,7 @@ public class MechArm {
 
 			dOut.writeInt(b);
 			dOut.flush();
+
 			switch (b) {
 			case 1:
 				LCD.clear();
@@ -66,9 +67,11 @@ public class MechArm {
 			case 4:
 				LCD.clear();
 				LCD.drawString("Opening Claw", 0, 0);
-				Motor.A.forward();
-				Delay.msDelay(100);
-				Motor.A.stop();
+				if(Motor.A.isMoving()) {
+					
+				}else {
+					Motor.A.forward();
+				}
 				break;
 			case 5:
 				LCD.clear();
@@ -85,16 +88,22 @@ public class MechArm {
 				Motor.C.stop();
 				break;
 			case 10:
-				//Motor.A.stop();
-				//Motor.B.stop();
-				//Motor.C.stop();
+				if(Motor.A.isMoving()) {
+					Motor.A.stop();
+				} else if(Motor.B.isMoving()) {
+					Motor.B.stop();
+				} else if(Motor.C.isMoving()) {
+					Motor.C.stop();
+				} else {}
 				break;
 			case 11:
 				LCD.clear();
 				LCD.drawString("Closing Claw", 0, 0);
-				Motor.A.backward();
-				Delay.msDelay(100);
-				Motor.A.stop();
+				if(Motor.A.isMoving()) {
+					
+				}else {
+					Motor.A.backward();
+				}
 				break;
 			}
 			

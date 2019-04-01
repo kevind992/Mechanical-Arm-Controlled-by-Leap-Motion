@@ -11,6 +11,6 @@ public class ServiceSetup {
 		
 		Naming.rebind("mechservice", ms);
 		
-		System.out.println("[info] - mech arm service running..");
+		System.out.println("[INFO] - Mech Arm Service Running..");
 	}
 }

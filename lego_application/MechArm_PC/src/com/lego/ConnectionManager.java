@@ -43,6 +43,7 @@ public class ConnectionManager {
 
 		int x = 0;
 		try {
+			System.out.println("[INFO] - Command from Leap Motion: " + commandCode);
 			outDat.writeInt(commandCode);
 			outDat.flush();
 		} catch (IOException ioe) {
@@ -54,18 +55,18 @@ public class ConnectionManager {
 		} catch (IOException ioe) {
 			System.err.println("IO Exception reading reply");
 		}
-		System.out.println("Sent " + commandCode + " Received " + x);
+		System.out.println("[INFO] - Sent " + commandCode + " Received " + x);
 		if (commandCode == 6) {
 			try {
 				inDat.close();
 				outDat.close();
-				System.out.println("Closed data streams");
+				System.out.println("[INFO] - Closed data streams..");
 			} catch (IOException ioe) {
 				System.err.println("IO Exception Closing connection");
 			}
 			try {
 				conn.close();
-				System.out.println("Closed connection");
+				System.out.println("[INFO] - Closed connection..");
 			} catch (IOException ioe) {
 				System.err.println("IO Exception Closing connection");
 			}

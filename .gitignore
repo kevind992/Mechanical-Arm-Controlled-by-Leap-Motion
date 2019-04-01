@@ -5,6 +5,9 @@ LeapSDK/
 .nxd
 .nxj
 
+# Stupid Mac file extension
+.DS_Store
+
 # Compiled class file
 *.class
 

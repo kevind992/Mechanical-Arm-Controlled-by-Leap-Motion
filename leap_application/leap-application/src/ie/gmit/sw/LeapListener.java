@@ -9,6 +9,7 @@ import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.SwipeGesture;
+import com.leapmotion.leap.Vector;
 import com.rmi.MechService;
 import com.rmi.RMI_Client;
 
@@ -55,16 +56,32 @@ public class LeapListener extends Listener {
     			}
     		} catch (RemoteException e) {}
     		
-    	} else if(furthestLeft.isLeft()) {
+    	
+    	
+    	if(furthestLeft.isLeft()) {
     		GestureList gestures = frame.gestures();
         	for(Gesture gesture : gestures) {
-        		if(gesture.type() == Gesture.Type.TYPE_SWIPE) {
-        			SwipeGesture swipe = new SwipeGesture(gesture);
-        			System.out.println("Swipe!");
+        		switch(gesture.type()) {
+	        		case TYPE_SWIPE:
+	        			SwipeGesture swipe = new SwipeGesture(gesture);
+	        			
+	        			Vector swipeVector = swipe.direction();
+	        			float swipeDirectionX = swipeVector.getX();
+	        			
+	        			if(swipeDirectionX > 0) {
+	        				// 5
+	        				System.out.println("Move right");
+	        			} else if(swipeDirectionX < 0) {
+	        				// 1
+	        				System.out.println("Move left");
+	        			}
+	        			
+//	        			System.out.println("Swipe Direction X: " + swipeDirectionX);
+	        			break;
+	        		default:
+	        			System.out.println("Unrecognised gesture!");
         		}
         	}
     	}
     }
-
-
 }

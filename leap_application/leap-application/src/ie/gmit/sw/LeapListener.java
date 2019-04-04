@@ -67,22 +67,22 @@ public class LeapListener extends Listener {
     		GestureList gestures = frame.gestures();
         	for(Gesture gesture : gestures) {
         		switch(gesture.type()) {
-//	        		case TYPE_SWIPE:
-//	        			SwipeGesture swipe = new SwipeGesture(gesture);
-//	        			
-//	        			Vector swipeVector = swipe.direction();
-//	        			float swipeDirectionX = swipeVector.getX();
-//	        			
-//	        			if(swipeDirectionX > 0) {
-//	        				// 5
-//	        				System.out.println("Move right");
-//	        			} else if(swipeDirectionX < 0) {
-//	        				// 1
-//	        				System.out.println("Move left");
-//	        			}
-//	        			
-////	        			System.out.println("Swipe Direction X: " + swipeDirectionX);
-//	        			break;
+	        		case TYPE_SWIPE:
+	        			SwipeGesture swipe = new SwipeGesture(gesture);
+	        			
+	        			Vector swipeVector = swipe.direction();
+	        			float swipeDirectionY = swipeVector.getY();
+	        			
+	        			if(swipeDirectionY > 0) {
+	        				// 5
+	        				System.out.println("Move right");
+	        			} else if(swipeDirectionY < 0) {
+	        				// 1
+	        				System.out.println("Move left");
+	        			}
+	        			
+//	        			System.out.println("Swipe Direction X: " + swipeDirectionX);
+	        			break;
 	        		case TYPE_CIRCLE:
 	        			CircleGesture circle = new CircleGesture(gesture);
 	        			

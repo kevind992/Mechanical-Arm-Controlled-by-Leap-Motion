@@ -5,6 +5,9 @@ LeapSDK/
 .nxd
 .nxj
 
+# Microsoft Powerpoint
+~$presentation.pptx
+
 # Stupid Mac file extension
 .DS_Store
 

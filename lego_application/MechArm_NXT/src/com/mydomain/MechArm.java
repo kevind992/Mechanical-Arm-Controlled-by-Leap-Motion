@@ -9,12 +9,6 @@ import lejos.nxt.comm.USB;
 import lejos.nxt.comm.USBConnection;
 import lejos.util.Delay;
 
-/**
- * Test of Java streams over USB. Run the PC example, USBSend, to send data.
- * 
- * @author Lawrie Griffiths
- * adapted by Erik Nauman
- */
 public class MechArm {
 
 	public static void main(String[] args) throws Exception {
@@ -22,102 +16,112 @@ public class MechArm {
 	}
 
 	public static void getData() throws Exception {
+		
 		LCD.clear();
 		LCD.drawString("waiting for \ncommand", 0, 0);
-		int b = 0;
+		int command = 0;
 		USBConnection conn = USB.waitForConnection();
 		while (true) {
+			
+			// Opening Input and Output streams
 			DataOutputStream dOut = conn.openDataOutputStream();
 			DataInputStream dIn = conn.openDataInputStream();
-			// Drive robot = new Drive();
-
+			
 			try {
-				b = dIn.readInt();
+				command = dIn.readInt();
 			} catch (EOFException e) {
 				break;
 			}
 
-			dOut.writeInt(b);
+			dOut.writeInt(command);
 			dOut.flush();
-
-			switch (b) {
+			
+			switch (command) {
 			case 1:
-				LCD.clear();
-				LCD.drawString("turn left", 0, 0);
-				LCD.refresh();
-				Motor.C.forward();
-				Delay.msDelay(200);
-				Motor.C.stop();
-				
+				// Command to Turn Arm Left
+				if (Motor.C.isMoving()) {
+					// If motor C moving do nothing
+				} else {
+					Motor.C.backward();
+				}
 				break;
 			case 2:
-				LCD.clear();
-				LCD.drawString("straight", 0, 0);
-				Motor.B.forward();
-				Delay.msDelay(200);
-				Motor.B.stop();
+				// Command to Lift Arm
+				if (Motor.B.isMoving()) {
+					// If motor B is moving do nothing
+				} else {
+					Motor.B.forward();
+				}
 				break;
 			case 3:
-				LCD.clear();
-				LCD.drawString("reverse", 0, 0);
-				Motor.B.backward();
-				Delay.msDelay(200);
-				Motor.B.stop();
+				// Command to Lower Arm
+				if (Motor.B.isMoving()) {
+					// If motor B is moving do nothing
+				} else {
+					Motor.B.backward();
+				}
 				break;
 			case 4:
-				LCD.clear();
-				LCD.drawString("Opening Claw", 0, 0);
-				if(Motor.A.isMoving()) {
-					
-				}else {
+				// Command to Open Claw
+				if (Motor.A.isMoving()) {
+
+				} else {
 					Motor.A.forward();
 				}
 				break;
 			case 5:
-				LCD.clear();
-				LCD.drawString("turn right", 0, 0);
-				Motor.C.backward();
-				Delay.msDelay(200);
-				Motor.C.stop();
+				// Command to Turn Arm Right
+				if (Motor.C.isMoving()) {
+
+				} else {
+					Motor.C.forward();
+				}
 				break;
 			case 6:
-				
+				// Close connection
 				LCD.clear();
 				LCD.drawString("Closing Connection", 0, 0);
-				Delay.msDelay(200);
-				Motor.C.stop();
+				LCD.refresh();
 				break;
 			case 10:
-				if(Motor.A.isMoving()) {
+				// Commands to Stop all Motors
+				if (Motor.A.isMoving()) {
+					// Stop Motor A
 					Motor.A.stop();
-				} else if(Motor.B.isMoving()) {
+				} else if (Motor.B.isMoving()) {
+					// Stop Motor B
 					Motor.B.stop();
-				} else if(Motor.C.isMoving()) {
+				}
+				break;
+			case 12: 
+				if(Motor.C.isMoving()) {
+					// Stop Motor C
 					Motor.C.stop();
-				} else {}
+				}
 				break;
 			case 11:
-				LCD.clear();
-				LCD.drawString("Closing Claw", 0, 0);
-				if(Motor.A.isMoving()) {
-					
-				}else {
+				// Command to Close Claw
+				if (Motor.A.isMoving()) {
+
+				} else {
 					Motor.A.backward();
 				}
 				break;
 			}
-			
+
 			LCD.clear();
 			LCD.drawString("waiting for \ncommand", 0, 0);
+			LCD.refresh();
+			// Closing Streams
 			dOut.close();
 			dIn.close();
-			//if code 6 break out of loop
-			if (b == 6)
+			// if code 6 break out of loop
+			if (command == 6)
 				break;
-		}//end while
+		} // end while
 		LCD.clear();
 		LCD.drawString("connection \nclosed, \nbye!", 0, 0);
 		Delay.msDelay(1000);
 		conn.close();
-	}//end void
-}//end class
+	}// end void
+}// end class

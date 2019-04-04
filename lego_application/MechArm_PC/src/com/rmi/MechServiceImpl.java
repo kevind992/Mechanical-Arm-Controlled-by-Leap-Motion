@@ -17,5 +17,4 @@ public class MechServiceImpl  extends UnicastRemoteObject implements MechService
 	public void rmiSendCommand(int command) throws RemoteException {
 		new ConnectionManager().sendCommand(command);
 	}
-
 }

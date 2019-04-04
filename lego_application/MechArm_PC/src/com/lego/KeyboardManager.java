@@ -9,8 +9,7 @@ import java.rmi.RemoteException;
 
 import javax.swing.*;
 
-
-public class KeyboardManager extends JFrame implements KeyListener, ActionListener{
+public class KeyboardManager extends JFrame implements KeyListener, ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	JTextArea displayArea; // output messages
@@ -55,8 +54,6 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 		});
 	}
 
-	
-
 	private static void createAndShowGUI() throws MalformedURLException, RemoteException, NotBoundException {
 		// Create and set up the window.
 		KeyboardManager frame = new KeyboardManager("test");
@@ -99,8 +96,8 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 	public void keyTyped(KeyEvent e) {
 		if (e.getKeyChar() == ' ') {
 			displayInfo(e, "stop (space)");
-			//sender.sendCommand(4);
-			//rmi.rmiSendCommand(4);
+			// sender.sendCommand(4);
+			// rmi.rmiSendCommand(4);
 		}
 		if (e.getKeyChar() == 'q') {
 			displayInfo(e, "closing connection");
@@ -110,7 +107,7 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			//sender.sendCommand(6);
+			// sender.sendCommand(6);
 		}
 	}
 
@@ -118,7 +115,7 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			displayInfo(e, "back");
-			//sender.sendCommand(3);
+			// sender.sendCommand(3);
 			try {
 				cm.sendCommand(3);
 			} catch (Exception e1) {
@@ -133,7 +130,7 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			//sender.sendCommand(2);
+			// sender.sendCommand(2);
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			displayInfo(e, "left");
 			try {
@@ -142,7 +139,7 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			//sender.sendCommand(5);
+			// sender.sendCommand(5);
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			displayInfo(e, "right");
 			try {
@@ -150,9 +147,9 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				
+
 			}
-			//sender.sendCommand(1);
+			// sender.sendCommand(1);
 		} else if (e.getKeyCode() == KeyEvent.VK_O) {
 			displayInfo(e, "Open");
 			try {
@@ -161,7 +158,7 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			//sender.sendCommand(4);
+			// sender.sendCommand(4);
 		} else if (e.getKeyCode() == KeyEvent.VK_C) {
 			displayInfo(e, "Close");
 			try {
@@ -170,7 +167,16 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			//sender.sendCommand(11);
+			// sender.sendCommand(11);
+		} else if (e.getKeyCode() == KeyEvent.VK_S) {
+			displayInfo(e, "Close");
+			try {
+				cm.sendCommand(10);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			// sender.sendCommand(11);
 		}
 	}
 
@@ -201,11 +207,9 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 		displayArea.setCaretPosition(displayArea.getDocument().getLength());
 	}
 
-
-
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

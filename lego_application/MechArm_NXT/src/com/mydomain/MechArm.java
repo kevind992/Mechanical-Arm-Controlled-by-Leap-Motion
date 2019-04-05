@@ -11,6 +11,8 @@ import lejos.util.Delay;
 
 public class MechArm {
 
+	private static int speed = 75;
+	
 	public static void main(String[] args) throws Exception {
 		getData();
 	}
@@ -27,15 +29,34 @@ public class MechArm {
 			DataOutputStream dOut = conn.openDataOutputStream();
 			DataInputStream dIn = conn.openDataInputStream();
 			
+			// Trying to read command from pc application
 			try {
 				command = dIn.readInt();
 			} catch (EOFException e) {
 				break;
 			}
-
+			
+			// Sending command back to pc application
 			dOut.writeInt(command);
 			dOut.flush();
 			
+			// Setting Motor Speed
+			Motor.C.setSpeed(speed);
+			Motor.A.setSpeed(speed);
+			Motor.B.setSpeed(speed);
+			
+			// Checking for a motor stall
+			if(Motor.A.isStalled() ) {
+				Motor.A.stop();
+			} 
+			if(Motor.B.isStalled() ) {
+				Motor.B.stop();
+			}
+			if(Motor.C.isStalled() ) {
+				Motor.C.stop();
+			}
+			
+			// Switch to handle command
 			switch (command) {
 			case 1:
 				// Command to Turn Arm Left
@@ -88,17 +109,25 @@ public class MechArm {
 				if (Motor.A.isMoving()) {
 					// Stop Motor A
 					Motor.A.stop();
-				} else if (Motor.B.isMoving()) {
-					// Stop Motor B
-					Motor.B.stop();
+				} else {
+					// Do nothing
 				}
 				break;
 			case 12: 
 				if(Motor.C.isMoving()) {
 					// Stop Motor C
 					Motor.C.stop();
+				} else if (Motor.B.isMoving()){
+					Motor.B.stop();
 				}
+				
 				break;
+			case 14:
+				if(Motor.B.isMoving()) {
+					Motor.B.stop();
+				} else {
+					// Do Nothing
+				}
 			case 11:
 				// Command to Close Claw
 				if (Motor.A.isMoving()) {

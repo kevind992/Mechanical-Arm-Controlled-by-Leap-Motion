@@ -11,6 +11,11 @@ import javax.swing.*;
 
 import com.lego.ConnectionManager;
 
+/*
+ * The purpose of this Class is to test the NXT unit by
+ * taking keyboard inputs and sending commands to the ConnectionManager
+ * This enables us to test the motors without having the Leap Motion Controller.
+ */
 public class KeyboardManager extends JFrame implements KeyListener, ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -71,6 +76,7 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 
 	private void addComponentsToPane() {
 
+		// Adding Components to the jPanel
 		JButton button = new JButton("Clear");
 		button.addActionListener(this);
 
@@ -115,9 +121,10 @@ public class KeyboardManager extends JFrame implements KeyListener, ActionListen
 
 	/** Handle the key pressed event from the text field. */
 	public void keyPressed(KeyEvent e) {
+		
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			displayInfo(e, "back");
-			// sender.sendCommand(3);
+			cm.sendCommand(3);
 			try {
 				cm.sendCommand(3);
 			} catch (Exception e1) {

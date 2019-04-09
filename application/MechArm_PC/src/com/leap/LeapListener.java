@@ -1,17 +1,12 @@
 package com.leap;
 
-import java.io.IOException;
-
 import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.Finger;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Gesture;
 import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.Listener;
-import com.leapmotion.leap.Pointable;
-import com.leapmotion.leap.ScreenTapGesture;
 import com.leapmotion.leap.SwipeGesture;
 import com.leapmotion.leap.Vector;
 import com.lego.ConnectionManager;
@@ -48,23 +43,24 @@ public class LeapListener extends Listener {
 		Hand furthestLeft = frame.hands().leftmost();
 		Hand furthestRight = frame.hands().rightmost();
 
+		// Detection for Right hand code 
 		if (furthestRight.isRight()) {
 			float roll = furthestRight.palmNormal().roll();
 			roll *= -1;
-
+			
+			// Closed fist gesture
 			if (furthestRight.grabStrength() > 0.90) {
 				cm.sendCommand(11);
 				System.out.println("Close Claw!");
-			} else {
-				// System.out.println("Stop Claw!");
+			} else { // If left hand is doing nothing
 				cm.sendCommand(10);
 			}
-			if (roll > 1) {
+			if (roll > 1) { // Open claw gesture
 				System.out.println("Open Claw!");
 				cm.sendCommand(4);
 			}
 		}
-
+		// Detection code for Left hand
 		if (furthestLeft.isLeft()) {
 			
 			float roll = furthestLeft.palmNormal().roll();
@@ -76,11 +72,11 @@ public class LeapListener extends Listener {
 			}
 			
 			GestureList gestures = frame.gestures();
-			for (Gesture gesture : gestures) {
+			for (Gesture gesture : gestures) { 
 				//cm.sendCommand(12);
 				switch (gesture.type()) {
 //	        		
-				case TYPE_SWIPE:
+				case TYPE_SWIPE: // Switch statement for detecting up and down swipe
 					SwipeGesture swipe = new SwipeGesture(gesture);
 
 					Vector swipeVector = swipe.direction();
@@ -99,10 +95,11 @@ public class LeapListener extends Listener {
 //        			System.out.println("Swipe Direction X: " + swipeDirectionX);
 					break;
 
-				case TYPE_CIRCLE:
+				case TYPE_CIRCLE: // Switch statement for detecting a circle gesture
 					CircleGesture circle = new CircleGesture(gesture);
 
 					String clockwiseness;
+					
 					if (circle.pointable().direction().angleTo(circle.normal()) <= Math.PI / 2) {
 						clockwiseness = "clockwise";
 						// move right

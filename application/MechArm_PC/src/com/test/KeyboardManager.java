@@ -1,4 +1,4 @@
-package com.lego;
+package com.test;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,6 +8,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import javax.swing.*;
+
+import com.lego.ConnectionManager;
 
 public class KeyboardManager extends JFrame implements KeyListener, ActionListener {
 

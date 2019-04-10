@@ -33,3 +33,13 @@ Once the above software has been installed, clone the repository onto your PC an
 - Insert the Leap Motion Controller
 - Run the application by right clicking on the application folder and select "Run As" and then "Java Application"
 The Application should successfully connect with the Lego NXT device. 
+### Movement Gestures
+These are the Gestures to move the mechanical arm
+- **Right Hand Fist**: Close Claw
+- **Right Hand Open Hand Facing Up**: Open Claw
+- **Left Hand Swipe Up/Down**: Moves Arm up and down
+- **Left Hand Index Finger Rotate Clockwise and Anti-Clock**: Rotate Arm clockwise and Anti-clock 
+- **Left Hand Fist**: Stops Arm Movement
+## Authors
+- [Kevin Delassus](https://github.com/kevind992)
+- [Donal Burke](https://github.com/lanodburke)
